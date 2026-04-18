@@ -51,3 +51,11 @@ const gameBoard = (() => {
 
   return { getGameBoard, setGameBoard, checkWinCondition };
 })();
+
+function createPlayer(name, symbol) {
+  const makeMove = (y, x) => gameBoard.setGameBoard(symbol, y, x);
+  return { name, symbol, makeMove };
+}
+
+const player1 = createPlayer("One", "X");
+const player2 = createPlayer("Two", "O");
