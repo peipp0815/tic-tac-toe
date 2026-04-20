@@ -76,10 +76,8 @@ const gameController = (() => {
     }
   }
 
-  function playRound() {
+  function playRound(y, x) {
     const player = getActivePlayer();
-    const y = prompt(gameBoard.getGameBoard());
-    const x = prompt(gameBoard.getGameBoard());
     player.makeMove(y, x);
     console.log(gameBoard.getGameBoard());
     if (gameBoard.checkWinCondition()) {
@@ -91,3 +89,22 @@ const gameController = (() => {
 
   return { switchActivePlayer, getActivePlayer, playRound };
 })();
+
+function displayController() {
+  const tttButtons = document.querySelectorAll(".ticTacToeBtn");
+  tttButtons.forEach((button) => {
+    button.addEventListener("click", showMarker);
+    function showMarker() {
+      const player = gameController.getActivePlayer();
+      button.textContent = player.symbol;
+      gameController.playRound(
+        Number(button.dataset.yaxis),
+        Number(button.dataset.xaxis),
+      );
+      console.log("EventListenerRemoved");
+      button.removeEventListener("click", showMarker);
+    }
+  });
+}
+
+displayController();
