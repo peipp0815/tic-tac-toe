@@ -77,10 +77,9 @@ const gameController = (() => {
   }
 
   function playRound() {
-    console.log(gameBoard.getGameBoard());
     const player = getActivePlayer();
-    const y = prompt();
-    const x = prompt();
+    const y = prompt(gameBoard.getGameBoard());
+    const x = prompt(gameBoard.getGameBoard());
     player.makeMove(y, x);
     console.log(gameBoard.getGameBoard());
     if (gameBoard.checkWinCondition()) {
