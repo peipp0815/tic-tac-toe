@@ -18,7 +18,8 @@ const gameBoard = (() => {
         (gameBoardArray[0][0] === gameBoardArray[1][0] &&
           gameBoardArray[0][0] === gameBoardArray[2][0])
       ) {
-        return gameBoardArray[0][0];
+        console.log("1st");
+        return true;
       }
     }
 
@@ -31,7 +32,8 @@ const gameBoard = (() => {
         (gameBoardArray[1][1] === gameBoardArray[0][1] &&
           gameBoardArray[1][1] === gameBoardArray[2][1])
       ) {
-        return gameBoardArray[1][1];
+        console.log("2nd");
+        return true;
       }
     }
 
@@ -42,10 +44,11 @@ const gameBoard = (() => {
         (gameBoardArray[2][2] === gameBoardArray[0][2] &&
           gameBoardArray[2][2] === gameBoardArray[1][2])
       ) {
-        return gameBoardArray[2][2];
+        console.log("3rd");
+        return true;
       }
     }
-
+    console.log("4th");
     return false;
   };
 
@@ -59,3 +62,33 @@ function createPlayer(name, symbol) {
 
 const player1 = createPlayer("One", "X");
 const player2 = createPlayer("Two", "O");
+
+const gameController = (() => {
+  let player1Active = true;
+  function switchActivePlayer() {
+    player1Active = !player1Active;
+  }
+  function getActivePlayer() {
+    if (player1Active) {
+      return player1;
+    } else {
+      return player2;
+    }
+  }
+
+  function playRound() {
+    console.log(gameBoard.getGameBoard());
+    const player = getActivePlayer();
+    const y = prompt();
+    const x = prompt();
+    player.makeMove(y, x);
+    console.log(gameBoard.getGameBoard());
+    if (gameBoard.checkWinCondition()) {
+      console.log(`${player.name} won!`);
+    } else {
+      switchActivePlayer();
+    }
+  }
+
+  return { switchActivePlayer, getActivePlayer, playRound };
+})();
