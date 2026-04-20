@@ -82,6 +82,7 @@ const gameController = (() => {
     console.log(gameBoard.getGameBoard());
     if (gameBoard.checkWinCondition()) {
       console.log(`${player.name} won!`);
+      displayController.end();
     } else {
       switchActivePlayer();
     }
@@ -90,21 +91,32 @@ const gameController = (() => {
   return { switchActivePlayer, getActivePlayer, playRound };
 })();
 
-function displayController() {
+const displayController = (() => {
   const tttButtons = document.querySelectorAll(".ticTacToeBtn");
-  tttButtons.forEach((button) => {
-    button.addEventListener("click", showMarker);
-    function showMarker() {
-      const player = gameController.getActivePlayer();
-      button.textContent = player.symbol;
-      gameController.playRound(
-        Number(button.dataset.yaxis),
-        Number(button.dataset.xaxis),
-      );
-      console.log("EventListenerRemoved");
-      button.removeEventListener("click", showMarker);
-    }
-  });
-}
+  function start() {
+    tttButtons.forEach((button) => {
+      button.addEventListener("click", helpPlay);
+      function helpPlay() {
+        play(button);
+      }
+    });
+  }
+  function play(button) {
+    const player = gameController.getActivePlayer();
+    button.textContent = player.symbol;
+    gameController.playRound(
+      Number(button.dataset.yaxis),
+      Number(button.dataset.xaxis),
+    );
+    console.log("button disabled");
+    button.disabled = true;
+  }
+  function end() {
+    tttButtons.forEach((button) => {
+      button.disabled = true;
+    });
+  }
+  return { start, play, end };
+})();
 
-displayController();
+displayController.start();
