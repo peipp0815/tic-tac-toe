@@ -52,7 +52,15 @@ const gameBoard = (() => {
     return false;
   };
 
-  return { getGameBoard, setGameBoard, checkWinCondition };
+  function resetGameBoard() {
+    gameBoardArray = [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ];
+  }
+
+  return { getGameBoard, setGameBoard, checkWinCondition, resetGameBoard };
 })();
 
 function createPlayer(name, symbol) {
@@ -93,11 +101,14 @@ const gameController = (() => {
 
 const displayController = (() => {
   const tttButtons = document.querySelectorAll(".ticTacToeBtn");
+  const controller = new AbortController();
+  const { signal } = controller;
   function start() {
     tttButtons.forEach((button) => {
-      button.addEventListener("click", helpPlay);
+      button.addEventListener("click", helpPlay, { signal });
       function helpPlay() {
         play(button);
+        button.removeEventListener("click", helpPlay);
       }
     });
   }
@@ -108,13 +119,9 @@ const displayController = (() => {
       Number(button.dataset.yaxis),
       Number(button.dataset.xaxis),
     );
-    console.log("button disabled");
-    button.disabled = true;
   }
   function end() {
-    tttButtons.forEach((button) => {
-      button.disabled = true;
-    });
+    controller.abort();
   }
   return { start, play, end };
 })();
