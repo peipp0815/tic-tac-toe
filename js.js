@@ -63,15 +63,15 @@ const gameBoard = (() => {
   return { getGameBoard, setGameBoard, checkWinCondition, resetGameBoard };
 })();
 
-function createPlayer(name, symbol) {
-  const makeMove = (y, x) => gameBoard.setGameBoard(symbol, y, x);
-  return { name, symbol, makeMove };
-}
-
-const player1 = createPlayer("One", "X");
-const player2 = createPlayer("Two", "O");
-
 const gameController = (() => {
+  function createPlayer(name, symbol) {
+    const makeMove = (y, x) => gameBoard.setGameBoard(symbol, y, x);
+    return { name, symbol, makeMove };
+  }
+
+  const player1 = createPlayer("One", "X");
+  const player2 = createPlayer("Two", "O");
+
   let player1Active = true;
   function switchActivePlayer() {
     player1Active = !player1Active;
@@ -89,14 +89,20 @@ const gameController = (() => {
     player.makeMove(y, x);
     console.log(gameBoard.getGameBoard());
     if (gameBoard.checkWinCondition()) {
-      console.log(`${player.name} won!`);
+      document.getElementById("result").textContent = `${player.name} won!`;
       displayController.end();
     } else {
       switchActivePlayer();
     }
   }
 
-  return { switchActivePlayer, getActivePlayer, playRound };
+  function resetGame() {
+    gameBoard.resetGameBoard();
+    player1Active = true;
+    displayController.resetDisplay();
+  }
+
+  return { switchActivePlayer, getActivePlayer, playRound, resetGame };
 })();
 
 const displayController = (() => {
@@ -123,7 +129,12 @@ const displayController = (() => {
   function end() {
     controller.abort();
   }
-  return { start, play, end };
+  function resetDisplay() {
+    tttButtons.forEach((button) => {
+      button.textContent = "";
+    });
+  }
+  return { start, play, end, resetDisplay };
 })();
 
 displayController.start();
