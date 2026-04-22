@@ -95,6 +95,10 @@ h6 {
   color: black;
 }
 
+#startGame {
+  margin-top: 20px;
+}
+
 #result {
   font-size: 24px;
   margin-top: 20px;

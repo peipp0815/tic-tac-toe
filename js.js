@@ -107,15 +107,15 @@ const gameController = (() => {
 
 const displayController = (() => {
   const tttButtons = document.querySelectorAll(".ticTacToeBtn");
-  const controller = new AbortController();
-  const { signal } = controller;
+
   function start() {
     tttButtons.forEach((button) => {
-      button.addEventListener("click", helpPlay, { signal });
+      button.addEventListener("click", helpPlay);
       function helpPlay() {
         play(button);
-        button.removeEventListener("click", helpPlay);
+        button.disabled = true;
       }
+      button.disabled = true;
     });
   }
   function play(button) {
@@ -127,14 +127,23 @@ const displayController = (() => {
     );
   }
   function end() {
-    controller.abort();
+    tttButtons.forEach((button) => {
+      button.disabled = true;
+    });
+    startGameBtn.style.display = "block";
   }
   function resetDisplay() {
     tttButtons.forEach((button) => {
       button.textContent = "";
+      button.disabled = false;
     });
+    document.getElementById("result").textContent = ``;
   }
   return { start, play, end, resetDisplay };
 })();
-
 displayController.start();
+const startGameBtn = document.getElementById("startGame");
+startGameBtn.addEventListener("click", () => {
+  gameController.resetGame();
+  startGameBtn.style.display = "none";
+});
