@@ -83,8 +83,9 @@ const gameController = (() => {
       return player2;
     }
   }
-
+  let playRoundCounter = 0;
   function playRound(y, x) {
+    playRoundCounter++;
     const player = getActivePlayer();
     player.makeMove(y, x);
     console.log(gameBoard.getGameBoard());
@@ -94,12 +95,17 @@ const gameController = (() => {
     } else {
       switchActivePlayer();
     }
+    if (playRoundCounter >= 9) {
+      document.getElementById("result").textContent = `Draw!`;
+      displayController.end();
+    }
   }
 
   function resetGame() {
     gameBoard.resetGameBoard();
     player1Active = true;
     displayController.resetDisplay();
+    playRoundCounter = 0;
   }
 
   return { switchActivePlayer, getActivePlayer, playRound, resetGame };
