@@ -107,8 +107,17 @@ const gameController = (() => {
     displayController.resetDisplay();
     playRoundCounter = 0;
   }
-
-  return { switchActivePlayer, getActivePlayer, playRound, resetGame };
+  function displayPlayerNames() {
+    document.getElementById("names").textContent =
+      `${player1.name} vs ${player2.name}`;
+  }
+  return {
+    switchActivePlayer,
+    getActivePlayer,
+    playRound,
+    resetGame,
+    displayPlayerNames,
+  };
 })();
 
 const displayController = (() => {
@@ -123,6 +132,7 @@ const displayController = (() => {
       }
       button.disabled = true;
     });
+    gameController.displayPlayerNames();
   }
   function play(button) {
     const player = gameController.getActivePlayer();
