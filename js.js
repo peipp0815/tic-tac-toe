@@ -108,8 +108,13 @@ const gameController = (() => {
     playRoundCounter = 0;
   }
   function displayPlayerNames() {
-    document.getElementById("names").textContent =
-      `${player1.name} vs ${player2.name}`;
+    document.getElementById("player1Name").textContent = `${player1.name}`;
+    document.getElementById("player2Name").textContent = `${player2.name}`;
+  }
+
+  function setPlayerNames(name1, name2) {
+    player1.name = name1;
+    player2.name = name2;
   }
   return {
     switchActivePlayer,
@@ -117,6 +122,7 @@ const gameController = (() => {
     playRound,
     resetGame,
     displayPlayerNames,
+    setPlayerNames,
   };
 })();
 
@@ -133,6 +139,7 @@ const displayController = (() => {
       button.disabled = true;
     });
     gameController.displayPlayerNames();
+    editPlayerNames();
   }
   function play(button) {
     const player = gameController.getActivePlayer();
@@ -154,6 +161,26 @@ const displayController = (() => {
       button.disabled = false;
     });
     document.getElementById("result").textContent = ``;
+  }
+  function editPlayerNames() {
+    const editPlayerNamesBtn = document.getElementById("editPlayerNamesBtn");
+    const player1Name = document.getElementById("player1Name");
+    const player2Name = document.getElementById("player2Name");
+    editPlayerNamesBtn.addEventListener("click", () => {
+      if (player1Name.hasAttribute("contenteditable")) {
+        player1Name.removeAttribute("contenteditable");
+        player2Name.removeAttribute("contenteditable");
+        editPlayerNamesBtn.textContent = "Edit Player Names";
+        gameController.setPlayerNames(
+          player1Name.textContent,
+          player2Name.textContent,
+        );
+      } else {
+        player1Name.setAttribute("contenteditable", "true");
+        player2Name.setAttribute("contenteditable", "true");
+        editPlayerNamesBtn.textContent = "Submit New Names";
+      }
+    });
   }
   return { start, play, end, resetDisplay };
 })();

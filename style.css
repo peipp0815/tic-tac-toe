@@ -71,7 +71,12 @@ h6 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 8px;
+  gap: 16px;
+}
+
+#editPlayerNamesBtn {
+  align-self: start;
 }
 
 #ticTacToeField {
