@@ -83,10 +83,21 @@ const gameController = (() => {
       return player2;
     }
   }
+  function displayActivePlayer(player) {
+    if (player == player1) {
+      document.getElementById("player2Name").style.textDecoration = "underline";
+      document.getElementById("player1Name").style.textDecoration = "none";
+    } else {
+      document.getElementById("player1Name").style.textDecoration = "underline";
+      document.getElementById("player2Name").style.textDecoration = "none";
+      return player1;
+    }
+  }
   let playRoundCounter = 0;
   function playRound(y, x) {
     playRoundCounter++;
     const player = getActivePlayer();
+    displayActivePlayer(player);
     player.makeMove(y, x);
     console.log(gameBoard.getGameBoard());
     if (gameBoard.checkWinCondition()) {
@@ -106,6 +117,8 @@ const gameController = (() => {
     player1Active = true;
     displayController.resetDisplay();
     playRoundCounter = 0;
+    document.getElementById("player1Name").style.textDecoration = "underline";
+    document.getElementById("player2Name").style.textDecoration = "none";
   }
   function displayPlayerNames() {
     document.getElementById("player1Name").textContent = `${player1.name}`;
