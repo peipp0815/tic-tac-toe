@@ -167,6 +167,8 @@ const displayController = (() => {
       button.disabled = true;
     });
     startGameBtn.style.display = "block";
+    document.getElementById("player1Name").style.textDecoration = "none";
+    document.getElementById("player2Name").style.textDecoration = "none";
   }
   function resetDisplay() {
     tttButtons.forEach((button) => {
