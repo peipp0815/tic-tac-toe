@@ -18,7 +18,6 @@ const gameBoard = (() => {
         (gameBoardArray[0][0] === gameBoardArray[1][0] &&
           gameBoardArray[0][0] === gameBoardArray[2][0])
       ) {
-        console.log("1st");
         return true;
       }
     }
@@ -32,7 +31,6 @@ const gameBoard = (() => {
         (gameBoardArray[1][1] === gameBoardArray[0][1] &&
           gameBoardArray[1][1] === gameBoardArray[2][1])
       ) {
-        console.log("2nd");
         return true;
       }
     }
@@ -44,11 +42,9 @@ const gameBoard = (() => {
         (gameBoardArray[2][2] === gameBoardArray[0][2] &&
           gameBoardArray[2][2] === gameBoardArray[1][2])
       ) {
-        console.log("3rd");
         return true;
       }
     }
-    console.log("4th");
     return false;
   };
 
@@ -99,7 +95,6 @@ const gameController = (() => {
     const player = getActivePlayer();
     displayActivePlayer(player);
     player.makeMove(y, x);
-    console.log(gameBoard.getGameBoard());
     if (gameBoard.checkWinCondition()) {
       document.getElementById("result").textContent = `${player.name} won!`;
       displayController.end();
@@ -130,7 +125,6 @@ const gameController = (() => {
     player2.name = name2;
   }
   return {
-    switchActivePlayer,
     getActivePlayer,
     playRound,
     resetGame,
@@ -197,7 +191,7 @@ const displayController = (() => {
       }
     });
   }
-  return { start, play, end, resetDisplay };
+  return { start, end, resetDisplay };
 })();
 displayController.start();
 const startGameBtn = document.getElementById("startGame");
