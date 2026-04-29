@@ -190,6 +190,18 @@ const displayController = (() => {
         editPlayerNamesBtn.textContent = "Submit New Names";
       }
     });
+    player1Name.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("editPlayerNamesBtn").click();
+      }
+    });
+    player2Name.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("editPlayerNamesBtn").click();
+      }
+    });
   }
   return { start, end, resetDisplay };
 })();
